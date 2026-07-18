@@ -21,7 +21,7 @@ connectDB();
 
 // Routes
 app.use("/products", productRoutes);
-app.use("/cart", cartRoutes);
+app.use("/carts", cartRoutes);
 // Home Route
 app.get("/", (req, res) => {
   res.send("Server is running");
