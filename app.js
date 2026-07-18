@@ -15,10 +15,13 @@ mongoose
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.log(err));
 
+const connectDB = require("./config/db");
+
+connectDB();
+
 // Routes
 app.use("/products", productRoutes);
 app.use("/cart", cartRoutes);
-
 // Home Route
 app.get("/", (req, res) => {
   res.send("Server is running");

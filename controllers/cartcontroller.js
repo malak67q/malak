@@ -1,9 +1,9 @@
-const Cart = require("../models/Cart");
+const cartService = require("../services/cartService");
 
-// إنشاء Cart جديد
+// إنشاء Cart
 const createCart = async (req, res) => {
   try {
-    const cart = await Cart.create({ items: [] });
+    const cart = await cartService.createCart();
     res.status(201).json(cart);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -13,7 +13,7 @@ const createCart = async (req, res) => {
 // عرض Cart
 const getCart = async (req, res) => {
   try {
-    const cart = await Cart.findById(req.params.id).populate("items.product");
+    const cart = await cartService.getCartById(req.params.id);
 
     if (!cart) {
       return res.status(404).json({ message: "Cart not found" });
@@ -30,15 +30,15 @@ const addItemToCart = async (req, res) => {
   try {
     const { product, quantity } = req.body;
 
-    const cart = await Cart.findById(req.params.id);
+    const cart = await cartService.addItemToCart(
+      req.params.id,
+      product,
+      quantity
+    );
 
     if (!cart) {
       return res.status(404).json({ message: "Cart not found" });
     }
-
-    cart.items.push({ product, quantity });
-
-    await cart.save();
 
     res.json(cart);
   } catch (error) {
