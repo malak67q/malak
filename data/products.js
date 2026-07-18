@@ -1,20 +1,37 @@
-const products = [
+const mongoose = require("mongoose");
+
+const productSchema = new mongoose.Schema(
   {
-    name: "iPhone Case",
-    price: 300,
-    description: "Silicone phone case",
-    category: "iPhone",
-    image: "case1.jpg"
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
+    price: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
+
+    description: {
+      type: String,
+      required: true,
+    },
+
+    category: {
+      type: String,
+      required: true,
+    },
+
+    image: {
+      type: String,
+      required: true,
+    },
   },
-
   {
-    name: "Samsung Case",
-    price: 250,
-    description: "Protective case",
-    category: "Samsung",
-    image: "case2.jpg"
+    timestamps: true,
   }
-];
+);
 
-
-module.exports = products;
+module.exports = mongoose.model("Product", productSchema);
